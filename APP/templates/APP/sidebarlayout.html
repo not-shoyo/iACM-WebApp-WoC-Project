@@ -1,0 +1,131 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        {% block HEAD_STUFF %}
+            <title>pain</title>
+        {% endblock %}
+        <link rel="stylesheet" href="{% static 'website/sidebarstyle.css' %}">
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    </head>
+    <body>
+        <div class="click" id="main-menu-btn">
+            <span class="fas fa-bars"></span>
+        </div>
+        <nav class="sidebar show">
+            <a href="index">
+                <div class="text" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    iACM
+                </div>
+            </a>
+            <ul>
+                <li class="active">
+                    <a href="#">Dashboard
+                        <span class="fa fa-home mr-3"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="sig-btn">SIGs
+                        <span class="fas fa-caret-down first"></span>
+                    </a>
+                    <ul id="sig-show">
+                        <li><a href="SIGpage/Sanganitra" class="internal">Sanganitra</a></li>
+                        <li><a href="SIGpage/Yantrika" class="internal">Yantrika</a></li>
+                        <li><a href="SIGpage/Vidyut" class="internal">Vidyut</a></li>
+                        <li><a href="SIGpage/Kaaryvarta" class="internal">Kaaryvarta</a></li>
+                        <li><a href="SIGpage/Saahitya" class="internal">Saahitya</a></li>
+                        <li><a href="SIGpage/Media and Publicity" class="internal">Media and Publicity</a></li>
+                    </ul>
+                </li>
+                <!-- <li>
+                <a href="#" class="serv-btn">Services
+                <span class="fas fa-caret-down second"></span>
+                </a>
+                <ul class="serv-show">
+                    <li><a href="#" class="internal">App Design</a></li>
+                    <li><a href="#" class="internal">Web Design</a></li>
+                </ul>
+                </li> -->
+                <li>
+                    <a href="#">Sign Out
+                        <span class="fa fa-user mr-3"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        {% block CONTENT %}
+        <div class="wrapper">
+            <div class="header">
+                Sidebar Menu with sub-menu
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block SCRIPTS %}
+        <script>
+            var feat = false;
+            // var serv = false;
+            $(document).ready(function() {
+                $(".sidebar.show").css("height", $("wrapper").height());
+            });
+            $('#main-menu-btn').click(function(){
+                $(this).toggleClass("click");
+                $('.sidebar').toggleClass("show");
+                $('.wrapper').toggleClass("bigger");
+            });
+            $('#sig-btn').click(function(){
+                $('nav ul #sig-show').toggleClass("show");
+                $('nav ul .first').toggleClass("rotate");
+                feat = !feat;
+                // if (serv) {
+                //     $('nav ul .serv-show').toggleClass("show1");
+                //     $('nav ul .second').toggleClass("rotate");
+                //     $('.internal.active').toggleClass("active");
+                //     serv = !serv;
+                // }
+            });
+            // $('.serv-btn').click(function(){
+            //     $('nav ul .serv-show').toggleClass("show1");
+            //     $('nav ul .second').toggleClass("rotate");
+            //     serv = !serv;
+            //     if (feat) {
+            //         $('nav ul .feat-show').toggleClass("show");
+            //         $('nav ul .first').toggleClass("rotate");
+            //         $('.internal.active').toggleClass("active");
+            //         feat = !feat;
+            //     }
+            // });
+            $('nav ul li').click(function(event){
+                var target = $(event.target);
+                if (!target.is("#sig-btn") && !target.is("#sig-btn span") && 
+                    // !target.is(".serv-btn") && !target.is(".serv-btn span") &&
+                    !target.is(".internal") && !target.is(".internal")) {
+                    if (feat) {
+                        $('nav ul #sig-show').toggleClass("show");
+                        $('nav ul .first').toggleClass("rotate");
+                        $('.internal.active').toggleClass("active");
+                        feat = !feat;
+                    }
+                    // if (serv) {
+                    //     $('nav ul .serv-show').toggleClass("show1");
+                    //     $('nav ul .second').toggleClass("rotate");
+                    //     $('.internal.active').toggleClass("active");
+                    //     serv = !serv;
+                    // }
+                }
+                $(this).addClass("active").siblings().removeClass("active");
+            });
+            $('.internal').click(function(event){
+                var target = $(event.target);
+                $('.internal.active').toggleClass("active");
+                target.toggleClass("active");
+            });
+        </script>
+        {% endblock %}
+   </body>
+</html>
